@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище SkladDBModelContainer" CdmEntityContainer="SkladDBEntities">
+    <EntitySetMapping Name="Customer">
+      <EntityTypeMapping TypeName="SkladDBModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="ID_customer" ColumnName="ID_customer" />
+          <ScalarProperty Name="C_Name" ColumnName="_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Invoice">
+      <EntityTypeMapping TypeName="SkladDBModel.Invoice">
+        <MappingFragment StoreEntitySet="Invoice">
+          <ScalarProperty Name="ID_invoice" ColumnName="ID_invoice" />
+          <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+          <ScalarProperty Name="ID_customer" ColumnName="ID_customer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Manufacturer">
+      <EntityTypeMapping TypeName="SkladDBModel.Manufacturer">
+        <MappingFragment StoreEntitySet="Manufacturer">
+          <ScalarProperty Name="ID_manufacturer" ColumnName="ID_manufacturer" />
+          <ScalarProperty Name="C_Name" ColumnName="_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product">
+      <EntityTypeMapping TypeName="SkladDBModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="ID_product" ColumnName="ID_product" />
+          <ScalarProperty Name="C_Name" ColumnName="_Name" />
+          <ScalarProperty Name="C_Count" ColumnName="_Count" />
+          <ScalarProperty Name="ID_manufacturer" ColumnName="ID_manufacturer" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_customer">
+      <EntityTypeMapping TypeName="SkladDBModel.Product_customer">
+        <MappingFragment StoreEntitySet="Product_customer">
+          <ScalarProperty Name="ID_product" ColumnName="ID_product" />
+          <ScalarProperty Name="ID_customer" ColumnName="ID_customer" />
+          <ScalarProperty Name="Order_date" ColumnName="Order_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Product_Storage_place">
+      <EntityTypeMapping TypeName="SkladDBModel.Product_Storage_place">
+        <MappingFragment StoreEntitySet="Product_Storage_place">
+          <ScalarProperty Name="ID_storage_place" ColumnName="ID_storage_place" />
+          <ScalarProperty Name="ID_product" ColumnName="ID_product" />
+          <ScalarProperty Name="C_Count" ColumnName="_Count" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Storage_place">
+      <EntityTypeMapping TypeName="SkladDBModel.Storage_place">
+        <MappingFragment StoreEntitySet="Storage_place">
+          <ScalarProperty Name="ID_storage_place" ColumnName="ID_storage_place" />
+          <ScalarProperty Name="Adress" ColumnName="Adress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

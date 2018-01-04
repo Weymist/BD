@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище SkladDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID_customer" />
+    </Key>
+    <Property Name="ID_customer" Type="int" Nullable="false" />
+    <Property Name="_Name" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="ID_invoice" />
+    </Key>
+    <Property Name="ID_invoice" Type="int" Nullable="false" />
+    <Property Name="Order_date" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="ID_customer" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="ID_manufacturer" />
+    </Key>
+    <Property Name="ID_manufacturer" Type="int" Nullable="false" />
+    <Property Name="_Name" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID_product" />
+    </Key>
+    <Property Name="ID_product" Type="int" Nullable="false" />
+    <Property Name="_Name" Type="varchar" MaxLength="48" Nullable="false" />
+    <Property Name="_Count" Type="int" Nullable="false" />
+    <Property Name="ID_manufacturer" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product_customer">
+    <Key>
+      <PropertyRef Name="ID_product" />
+      <PropertyRef Name="ID_customer" />
+    </Key>
+    <Property Name="ID_product" Type="int" Nullable="false" />
+    <Property Name="ID_customer" Type="int" Nullable="false" />
+    <Property Name="Order_date" Type="varchar" MaxLength="48" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product_Storage_place">
+    <Key>
+      <PropertyRef Name="ID_storage_place" />
+      <PropertyRef Name="ID_product" />
+    </Key>
+    <Property Name="ID_storage_place" Type="int" Nullable="false" />
+    <Property Name="ID_product" Type="int" Nullable="false" />
+    <Property Name="_Count" Type="int" />
+  </EntityType>
+  <EntityType Name="Storage_place">
+    <Key>
+      <PropertyRef Name="ID_storage_place" />
+    </Key>
+    <Property Name="ID_storage_place" Type="int" Nullable="false" />
+    <Property Name="Adress" Type="varchar" MaxLength="96" Nullable="false" />
+  </EntityType>
+  <Association Name="Invoice_fk0">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID_customer" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="ID_customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_customer_fk0">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Product_customer" Type="Self.Product_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID_product" />
+      </Principal>
+      <Dependent Role="Product_customer">
+        <PropertyRef Name="ID_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_customer_fk1">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Product_customer" Type="Self.Product_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID_customer" />
+      </Principal>
+      <Dependent Role="Product_customer">
+        <PropertyRef Name="ID_customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_fk0">
+    <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturer">
+        <PropertyRef Name="ID_manufacturer" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ID_manufacturer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_Storage_place_fk0">
+    <End Role="Storage_place" Type="Self.Storage_place" Multiplicity="1" />
+    <End Role="Product_Storage_place" Type="Self.Product_Storage_place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storage_place">
+        <PropertyRef Name="ID_storage_place" />
+      </Principal>
+      <Dependent Role="Product_Storage_place">
+        <PropertyRef Name="ID_storage_place" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_Storage_place_fk1">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Product_Storage_place" Type="Self.Product_Storage_place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID_product" />
+      </Principal>
+      <Dependent Role="Product_Storage_place">
+        <PropertyRef Name="ID_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище SkladDBModelContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_customer" EntityType="Self.Product_customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product_Storage_place" EntityType="Self.Product_Storage_place" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Storage_place" EntityType="Self.Storage_place" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="Invoice_fk0" Association="Self.Invoice_fk0">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="Product_customer_fk0" Association="Self.Product_customer_fk0">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Product_customer" EntitySet="Product_customer" />
+    </AssociationSet>
+    <AssociationSet Name="Product_customer_fk1" Association="Self.Product_customer_fk1">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Product_customer" EntitySet="Product_customer" />
+    </AssociationSet>
+    <AssociationSet Name="Product_fk0" Association="Self.Product_fk0">
+      <End Role="Manufacturer" EntitySet="Manufacturer" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="Product_Storage_place_fk0" Association="Self.Product_Storage_place_fk0">
+      <End Role="Storage_place" EntitySet="Storage_place" />
+      <End Role="Product_Storage_place" EntitySet="Product_Storage_place" />
+    </AssociationSet>
+    <AssociationSet Name="Product_Storage_place_fk1" Association="Self.Product_Storage_place_fk1">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Product_Storage_place" EntitySet="Product_Storage_place" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SkladDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="ID_customer" />
+    </Key>
+    <Property Name="ID_customer" Type="Int32" Nullable="false" />
+    <Property Name="C_Name" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Invoice" Relationship="Self.Invoice_fk0" FromRole="Customer" ToRole="Invoice" />
+    <NavigationProperty Name="Product_customer" Relationship="Self.Product_customer_fk1" FromRole="Customer" ToRole="Product_customer" />
+  </EntityType>
+  <EntityType Name="Invoice">
+    <Key>
+      <PropertyRef Name="ID_invoice" />
+    </Key>
+    <Property Name="ID_invoice" Type="Int32" Nullable="false" />
+    <Property Name="Order_date" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ID_customer" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.Invoice_fk0" FromRole="Invoice" ToRole="Customer" />
+  </EntityType>
+  <EntityType Name="Manufacturer">
+    <Key>
+      <PropertyRef Name="ID_manufacturer" />
+    </Key>
+    <Property Name="ID_manufacturer" Type="Int32" Nullable="false" />
+    <Property Name="C_Name" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Product" Relationship="Self.Product_fk0" FromRole="Manufacturer" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ID_product" />
+    </Key>
+    <Property Name="ID_product" Type="Int32" Nullable="false" />
+    <Property Name="C_Name" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="C_Count" Type="Int32" Nullable="false" />
+    <Property Name="ID_manufacturer" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Manufacturer" Relationship="Self.Product_fk0" FromRole="Product" ToRole="Manufacturer" />
+    <NavigationProperty Name="Product_customer" Relationship="Self.Product_customer_fk0" FromRole="Product" ToRole="Product_customer" />
+    <NavigationProperty Name="Product_Storage_place" Relationship="Self.Product_Storage_place_fk1" FromRole="Product" ToRole="Product_Storage_place" />
+  </EntityType>
+  <EntityType Name="Product_customer">
+    <Key>
+      <PropertyRef Name="ID_product" />
+      <PropertyRef Name="ID_customer" />
+    </Key>
+    <Property Name="ID_product" Type="Int32" Nullable="false" />
+    <Property Name="ID_customer" Type="Int32" Nullable="false" />
+    <Property Name="Order_date" Type="String" MaxLength="48" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.Product_customer_fk1" FromRole="Product_customer" ToRole="Customer" />
+    <NavigationProperty Name="Product" Relationship="Self.Product_customer_fk0" FromRole="Product_customer" ToRole="Product" />
+  </EntityType>
+  <EntityType Name="Product_Storage_place">
+    <Key>
+      <PropertyRef Name="ID_storage_place" />
+      <PropertyRef Name="ID_product" />
+    </Key>
+    <Property Name="ID_storage_place" Type="Int32" Nullable="false" />
+    <Property Name="ID_product" Type="Int32" Nullable="false" />
+    <Property Name="C_Count" Type="Int32" />
+    <NavigationProperty Name="Product" Relationship="Self.Product_Storage_place_fk1" FromRole="Product_Storage_place" ToRole="Product" />
+    <NavigationProperty Name="Storage_place" Relationship="Self.Product_Storage_place_fk0" FromRole="Product_Storage_place" ToRole="Storage_place" />
+  </EntityType>
+  <EntityType Name="Storage_place">
+    <Key>
+      <PropertyRef Name="ID_storage_place" />
+    </Key>
+    <Property Name="ID_storage_place" Type="Int32" Nullable="false" />
+    <Property Name="Adress" Type="String" MaxLength="96" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Product_Storage_place" Relationship="Self.Product_Storage_place_fk0" FromRole="Storage_place" ToRole="Product_Storage_place" />
+  </EntityType>
+  <Association Name="Invoice_fk0">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID_customer" />
+      </Principal>
+      <Dependent Role="Invoice">
+        <PropertyRef Name="ID_customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_customer_fk1">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Product_customer" Type="Self.Product_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="ID_customer" />
+      </Principal>
+      <Dependent Role="Product_customer">
+        <PropertyRef Name="ID_customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_fk0">
+    <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacturer">
+        <PropertyRef Name="ID_manufacturer" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="ID_manufacturer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_customer_fk0">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Product_customer" Type="Self.Product_customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID_product" />
+      </Principal>
+      <Dependent Role="Product_customer">
+        <PropertyRef Name="ID_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_Storage_place_fk1">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="Product_Storage_place" Type="Self.Product_Storage_place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="ID_product" />
+      </Principal>
+      <Dependent Role="Product_Storage_place">
+        <PropertyRef Name="ID_product" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Product_Storage_place_fk0">
+    <End Role="Storage_place" Type="Self.Storage_place" Multiplicity="1" />
+    <End Role="Product_Storage_place" Type="Self.Product_Storage_place" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storage_place">
+        <PropertyRef Name="ID_storage_place" />
+      </Principal>
+      <Dependent Role="Product_Storage_place">
+        <PropertyRef Name="ID_storage_place" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SkladDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customer" EntityType="Self.Customer" />
+    <EntitySet Name="Invoice" EntityType="Self.Invoice" />
+    <EntitySet Name="Manufacturer" EntityType="Self.Manufacturer" />
+    <EntitySet Name="Product" EntityType="Self.Product" />
+    <EntitySet Name="Product_customer" EntityType="Self.Product_customer" />
+    <EntitySet Name="Product_Storage_place" EntityType="Self.Product_Storage_place" />
+    <EntitySet Name="Storage_place" EntityType="Self.Storage_place" />
+    <AssociationSet Name="Invoice_fk0" Association="Self.Invoice_fk0">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Invoice" EntitySet="Invoice" />
+    </AssociationSet>
+    <AssociationSet Name="Product_customer_fk1" Association="Self.Product_customer_fk1">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="Product_customer" EntitySet="Product_customer" />
+    </AssociationSet>
+    <AssociationSet Name="Product_fk0" Association="Self.Product_fk0">
+      <End Role="Manufacturer" EntitySet="Manufacturer" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="Product_customer_fk0" Association="Self.Product_customer_fk0">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Product_customer" EntitySet="Product_customer" />
+    </AssociationSet>
+    <AssociationSet Name="Product_Storage_place_fk1" Association="Self.Product_Storage_place_fk1">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="Product_Storage_place" EntitySet="Product_Storage_place" />
+    </AssociationSet>
+    <AssociationSet Name="Product_Storage_place_fk0" Association="Self.Product_Storage_place_fk0">
+      <End Role="Storage_place" EntitySet="Storage_place" />
+      <End Role="Product_Storage_place" EntitySet="Product_Storage_place" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
